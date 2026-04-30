@@ -1,0 +1,46 @@
+{
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "client_secret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "tenant_id": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "subscription_id": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+
+    "managed_image_resource_group_name": "ForImageRG",
+    "managed_image_name": "myPackerImage",
+
+    "os_type": "Linux",
+    "image_publisher": "canonical",
+    "image_offer": "0001-com-ubuntu-server-jammy",
+    "image_sku": "22_04-lts",
+
+    "location": "Japan East",
+    "vm_size": "Standard_D2s_v3",
+
+    "azure_tags": {
+      "project": "packer-image",
+      "env": "dev"
+    }
+  }],
+
+  "provisioners": [{
+    "type": "shell",
+  "inline": [
+    "echo 'Starting setup...'",
+
+    "sudo apt-get update -y",
+
+    "sudo apt-get install -y openjdk-11-jdk || sudo apt-get install -y default-jdk",
+
+    "sudo apt-get install -y maven",
+
+    "java -version",
+    "mvn -version",
+
+    "echo 'Spring Boot environment ready'",
+
+    "sudo waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ]
+  }]
+}
