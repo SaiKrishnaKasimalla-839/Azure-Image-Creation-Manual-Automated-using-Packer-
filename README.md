@@ -12,6 +12,7 @@ Create reusable VM images in Azure using:
 
 ---
 
+
 # 🖥️ Manual Image Creation
 
 ## 🔹 Steps
